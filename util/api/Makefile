@@ -18,12 +18,16 @@ seed:
 
 test:
 	curl http://localhost:$(PORT)/customers
+	curl http://localhost:$(PORT)/products/1
 
 unit-test:
 	uv run pytest tests/ -v
 
 deploy: build
 	kubectl apply -f k8s/
+
+redeploy: build
+	kubectl rollout restart deployment/jetson-api
 
 undeploy:
 	kubectl delete -f k8s/
@@ -37,3 +41,4 @@ k8s-logs:
 
 k8s-test:
 	curl http://localhost:30080/customers
+	curl http://localhost:30080/products/1
