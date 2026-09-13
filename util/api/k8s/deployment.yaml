@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jetson-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jetson-api
+  template:
+    metadata:
+      labels:
+        app: jetson-api
+    spec:
+      containers:
+        - name: jetson-api
+          image: api:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000

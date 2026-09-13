@@ -21,3 +21,19 @@ test:
 
 unit-test:
 	uv run pytest tests/ -v
+
+deploy: build
+	kubectl apply -f k8s/
+
+undeploy:
+	kubectl delete -f k8s/
+
+k8s-status:
+	kubectl get pods -l app=jetson-api
+	kubectl get svc jetson-api
+
+k8s-logs:
+	kubectl logs -f deployment/jetson-api
+
+k8s-test:
+	curl http://localhost:30080/customers
